@@ -1,17 +1,31 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Add.css'
 import { assets,url } from '../../assets/assets';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import {StoreContext} from '../../context/StoreContext'
 
 const Add = () => {
+
+    const {category_list} = useContext(StoreContext);
+
+    console.log(category_list);
 
     const [data, setData] = useState({
         name: "",
         description: "",
         price: "",
-        category: "Salad"
+        category: 'Salaad'
     });
+
+    const fetchCategories = async ()=>{
+        const response = await axios.get(`${url}/api/category/list`);
+        return response
+    }
+
+    useEffect(()=>{
+        const res = fetchCategories();
+    })
 
     const [image, setImage] = useState(false);
 
@@ -67,16 +81,9 @@ const Add = () => {
                     <div className='add-category flex-col'>
                         <p>Product category</p>
                         <select name='category' onChange={onChangeHandler} >
-                            <option value="Salad">Salad</option>
-                            <option value="Rolls">Rolls</option>
-                            <option value="Deserts">Deserts</option>
-                            <option value="Sandwich">Sandwich</option>
-                            <option value="Cake">Cake</option>
-                            <option value="Pure Veg">Pure Veg</option>
-                            <option value="Non Veg">Non Veg</option>
-                            <option value="Pasta">Pasta</option>
-                            <option value="Noodles">Noodles</option>
-                            <option value="Fast Food">Fast Food</option>
+                            {category_list.map((item)=>{
+                                return <option key={item._id} value={item.name}>{item.name}</option>
+                            })}
                         </select>
                     </div>
                     <div className='add-price flex-col'>
