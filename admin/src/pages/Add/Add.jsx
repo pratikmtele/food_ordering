@@ -15,7 +15,7 @@ const Add = () => {
         name: "",
         description: "",
         price: "",
-        category: 'Salaad'
+        category: 'Salad'
     });
 
     const fetchCategories = async ()=>{
