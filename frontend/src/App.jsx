@@ -9,7 +9,8 @@ import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
 import MyOrders from './pages/MyOrders/MyOrders'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Verify from './pages/Verify/Verify'
+import Verify from './pages/Verify/Verify';
+import SearchFood from './pages/SearchFood/SearchFood';
 
 const App = () => {
 
@@ -23,6 +24,7 @@ const App = () => {
         <Navbar setShowLogin={setShowLogin}/>
         <Routes>
           <Route path='/' element={<Home />}/>
+          <Route path='/search-food' element={<SearchFood />}/>
           <Route path='/cart' element={<Cart />}/>
           <Route path='/order' element={<PlaceOrder />}/>
           <Route path='/myorders' element={<MyOrders />}/>

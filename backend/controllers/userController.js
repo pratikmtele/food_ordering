@@ -65,4 +65,8 @@ const registerUser = async (req,res) => {
     }
 }
 
-export {loginUser, registerUser}
+const updateAccount = async (req, res)=>{
+    // to-do: write code to update user account details
+}
+
+export {loginUser, registerUser, updateAccount}
