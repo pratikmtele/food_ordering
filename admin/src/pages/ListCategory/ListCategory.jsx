@@ -3,10 +3,13 @@ import "./ListCategory.css";
 import { url } from '../../assets/assets';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Searchbar from '../../components/Searchbar/Searchbar.jsx';
 
 function ListCategory() {
-  const [list,setList] = useState([]);
-  
+  const [list, setList] = useState([]);
+  const [search, setSearch] = useState("");
+  const [searchedMenu, setSearchedMenu] = useState([]);
+
   const fetchList = async () => {
     const response = await axios.get(`${url}/api/category/list`)
     if(response.data.success)
@@ -35,16 +38,37 @@ function ListCategory() {
     fetchList();
   },[])
 
+  const onSubmitHandler = (e)=>{
+    e.preventDefault();
+  }
+
+  const onChangeHandler = (e)=>{
+    setSearch(e.target.value);
+  }
+
+  useEffect(()=>{
+    setSearchedMenu(list.filter((item)=> item.name.includes(search)));
+  }, [search])
+
   return (
-    <div className='category-list add flex-col'>
-        <p>All Category List</p>
+      <div className='category-list add flex-col'>
+        <Searchbar onSubmitHandler={onSubmitHandler} onChangeHandler={onChangeHandler}/>
+        <p>All Menu List</p>
         <div className='category-list-table'>
           <div className="category-list-table-format title">
             <b>Image</b>
             <b>Name</b>
             <b>Action</b>
           </div>
-          {list.map((item, index)=>{
+          {search? searchedMenu.map((item, index)=>{
+            return (
+              <div key={index} className='category-list-table-format'>
+                <img src={`${url}/image/`+item.image} alt="" />
+                <p>{item.name}</p>
+                <p className='cursor' onClick={()=>removeCategory(item._id)}>x</p>
+              </div>
+            )
+          }): list.map((item, index)=>{
             return (
               <div key={index} className='category-list-table-format'>
                 <img src={`${url}/image/`+item.image} alt="" />

@@ -34,6 +34,11 @@ const addFood = async (req, res) => {
     }
 }
 
+// update food
+const updateFood = async ()=>{
+    //To-DO: update food by id
+}
+
 // delete food
 const removeFood = async (req, res) => {
     try {

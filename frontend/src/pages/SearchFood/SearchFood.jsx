@@ -13,13 +13,11 @@ function SearchFood() {
     const {food_list} = useContext(StoreContext);
 
     useEffect(()=>{
-        console.log(searchFood);
         setSearchedFood(food_list.filter((item)=>item.name.includes(searchFood)))
     }, [searchFood]);
 
     const onSubmitHandler = (e)=>{
         e.preventDefault();
-        console.log(searchedFood);
     }
 
   return (
@@ -36,7 +34,7 @@ function SearchFood() {
             {searchFood?<h2>Search Results for "{searchFood}"</h2>:<></>}
             {searchFood?<p className='search-result'>About {searchedFood.length} Results</p>: <></>}
             <div className='food-display-list'>
-            {searchedFood? searchedFood.map((item)=>{
+            {searchFood? searchedFood.map((item)=>{
                 return <FoodItem key={item._id} image={item.image} name={item.name} desc={item.description} price={item.price} id={item._id}/>
             }): food_list.map((item)=>{
                 return <FoodItem key={item._id} image={item.image} name={item.name} desc={item.description} price={item.price} id={item._id} />
