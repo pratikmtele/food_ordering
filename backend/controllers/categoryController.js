@@ -1,4 +1,5 @@
 import categoryModel from '../models/categoryModel.js'
+import fs from 'fs';
 
 // all category list
 const listCategory = async(req, res)=>{
@@ -28,4 +29,20 @@ const addCategory = async(req, res)=>{
     }
 }
 
-export {listCategory, addCategory}
+// delete category
+
+const removecategory = async (req, res)=>{
+    try {
+        const category = await categoryModel.findById(req.body.id);
+        fs.unlink(`uploads/categories/${category.image}`, ()=>{});
+
+        await categoryModel.findByIdAndDelete(req.body.id);
+        res.json({success: true, message: "Menu Removed"});
+
+    } catch (error) {
+        console.log(error);
+        res.json({success: false, message: 'error'});
+    }
+}
+
+export {listCategory, addCategory, removecategory}
