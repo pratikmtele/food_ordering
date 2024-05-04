@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import "./ListCategory.css";
 import { url } from '../../assets/assets';
+import { assets } from '../../assets/assets';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Searchbar from '../../components/Searchbar/Searchbar.jsx';
+import {Link} from 'react-router-dom';
 
 function ListCategory() {
   const [list, setList] = useState([]);
@@ -47,7 +49,7 @@ function ListCategory() {
   }
 
   useEffect(()=>{
-    setSearchedMenu(list.filter((item)=> item.name.includes(search)));
+    setSearchedMenu(list.filter((item)=> item.name.toLowerCase().includes(search)));
   }, [search])
 
   return (
@@ -65,7 +67,12 @@ function ListCategory() {
               <div key={index} className='category-list-table-format'>
                 <img src={`${url}/image/`+item.image} alt="" />
                 <p>{item.name}</p>
-                <p className='cursor' onClick={()=>removeCategory(item._id)}>x</p>
+                <div className='action-icons'>
+                  <Link to={`/menu/update/`+item._id}>
+                    <img className='cursor icons edit-icon' src={assets.Edit_icon}/>
+                  </Link>
+                  <img className='cursor icons' src={assets.Remove_icon} onClick={()=>removeCategory(item._id)}></img>
+                </div>
               </div>
             )
           }): list.map((item, index)=>{
@@ -73,7 +80,12 @@ function ListCategory() {
               <div key={index} className='category-list-table-format'>
                 <img src={`${url}/image/`+item.image} alt="" />
                 <p>{item.name}</p>
-                <p className='cursor' onClick={()=>removeCategory(item._id)}>x</p>
+                <div className='action-icons'>
+                  <Link to={`/menu/update/`+item._id}>
+                    <img className='cursor icons edit-icon' src={assets.Edit_icon}/>
+                  </Link>
+                  <img className='cursor icons' src={assets.Remove_icon} onClick={()=>removeCategory(item._id)}></img>
+                </div>
               </div>
             )
           })}

@@ -1,12 +1,12 @@
 .category-list {
-  width: 50%;
+  width: max(50vw, 600px) !important;
   margin-right: 10px;
   margin-bottom: 50px;
 }
 
 .category-list-table-format {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 0.5fr;
   align-items: center;
   gap: 5px;
   padding: 5px 15px;

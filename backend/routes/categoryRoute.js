@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import {listCategory, addCategory, removecategory} from '../controllers/categoryController.js'
+import {listCategory, addCategory, removecategory, fetchCategory, updateCategory} from '../controllers/categoryController.js'
 
 
 const categoryRouter = express.Router();
@@ -12,12 +12,14 @@ const storage = multer.diskStorage({
     filename: (req, file, cb)=>{
         return cb(null, `${Date.now()}${file.originalname}`)
     }
-})
+});
 
 const upload = multer({storage: storage})
 
 categoryRouter.get("/list", listCategory)
 categoryRouter.post("/add", upload.single("image"), addCategory)
 categoryRouter.post("/remove", removecategory)
+categoryRouter.get("/:id", fetchCategory)
+categoryRouter.post('/update/:id', upload.single('image'), updateCategory);
 
 export default categoryRouter

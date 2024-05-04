@@ -11,6 +11,52 @@ const listCategory = async(req, res)=>{
     }
 }
 
+// get category by id
+const fetchCategory = async (req, res)=>{
+    try {
+        const id = req.params.id;
+        const category = await categoryModel.findById(id);
+        if (category){
+            res.json({success: true, message: "Category Fetched", data: category});
+        } else {
+            res.status(404).json({success: false, message: "Category is not exists"});
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({success: false, message: "Error"});
+    }
+}
+
+// update Category
+const updateCategory = async (req, res)=>{
+    try {
+        const id = req.params.id;
+        const prevCategory = await categoryModel.findById(id);
+        let newCategory = {
+            name: req.body.name
+        }
+        if (req.file){
+            let image_filename = `${req.file.filename}`
+            newCategory = {
+                ...newCategory,
+                image: image_filename
+            }
+            fs.unlink(`uploads/categories/${prevCategory.image}`, ()=>{});
+        } else {
+            newCategory = {
+                ...newCategory,
+                image: req.body.image
+            }
+        }
+
+        const updatedCategory = await categoryModel.findByIdAndUpdate(id, newCategory, {new: true});
+        res.status(200).json({success: true, message: "Category Updated", data: updatedCategory});
+    } catch (error) {
+        console.log(error);
+        res.json({success: false, message: "Error"});
+    }
+}
+
 // add category
 const addCategory = async(req, res)=>{
     let image_filename = `${req.file.filename}`
@@ -45,4 +91,4 @@ const removecategory = async (req, res)=>{
     }
 }
 
-export {listCategory, addCategory, removecategory}
+export {listCategory, fetchCategory, addCategory, updateCategory, removecategory}

@@ -9,6 +9,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Category from './pages/Category/Category';
 import ListCategory from './pages/ListCategory/ListCategory.jsx';
+import EditFood from './pages/EditFood/EditFood.jsx';
+import EditCategory from './pages/EditCategory/EditCategory.jsx';
 
 const App = () => {
   return (
@@ -19,10 +21,12 @@ const App = () => {
       <div className="app-content">
         <Sidebar/>
         <Routes>
-          <Route path='/category' element={<Category/>} />
-          <Route path='/category-list' element={<ListCategory/>}/>
-          <Route path="/add" element={<Add/>}/>
-          <Route path="/list" element={<List/>}/>
+          <Route path='/menu' element={<Category/>} />
+          <Route path='/menu/list' element={<ListCategory/>}/>
+          <Route path="/food/add" element={<Add/>}/>
+          <Route path='/update/:id' element={<EditFood/>}/>
+          <Route path='/menu/update/:id' element={<EditCategory/>}/>
+          <Route path="/food/list" element={<List/>}/>
           <Route path="/orders" element={<Orders/>}/>
         </Routes>
       </div>
