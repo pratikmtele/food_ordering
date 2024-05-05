@@ -58,6 +58,12 @@ const StoreContextProvider = (props) => {
         setCategoryList(response.data.data);
     }
 
+    // fetch food by id
+    const fetchFood = async (id) => {
+        const response = await axios.get(url + "/api/food/" + id);
+        return response.data.data;
+    }
+
     useEffect(() => {
         async function loadData() {
             await fetchFoodList();
@@ -81,6 +87,7 @@ const StoreContextProvider = (props) => {
         getTotalCartAmount,
         token,
         setToken,
+        fetchFood,
         loadCartData,
         setCartItems
     };

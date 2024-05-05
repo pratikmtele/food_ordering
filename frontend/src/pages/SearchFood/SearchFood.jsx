@@ -13,7 +13,8 @@ function SearchFood() {
     const {food_list} = useContext(StoreContext);
 
     useEffect(()=>{
-        setSearchedFood(food_list.filter((item)=>item.name.includes(searchFood)))
+        setSearchedFood(food_list.filter((item)=>item.name.toLowerCase().includes(searchFood)))
+        console.log(searchedFood);
     }, [searchFood]);
 
     const onSubmitHandler = (e)=>{
@@ -25,7 +26,6 @@ function SearchFood() {
         <form className='search-form' onClick={onSubmitHandler}>
             <img className='search_icon' src={assets.Search_icon} alt="Search_icon" srcset="" />
             <input type="text" className='search-input' placeholder='Search Food' onChange={(e)=>setSearchFood(e.target.value)}/>
-            {/* <button className='search-btn' type='submit'>Search</button> */}
         </form>
 
         {/* food Items */}

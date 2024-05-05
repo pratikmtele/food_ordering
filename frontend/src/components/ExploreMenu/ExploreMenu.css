@@ -25,7 +25,7 @@
 }
 .explore-menu-list-item img {
   width: 7.5vw;
-  height: 7.5vw;
+  height: max(7.5vw, 75px);
   min-width: 80px;
   object-fit: cover;
   cursor: pointer;

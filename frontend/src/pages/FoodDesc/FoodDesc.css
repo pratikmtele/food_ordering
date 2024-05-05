@@ -1,0 +1,79 @@
+.food-desc-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.food-image {
+  width: 50%;
+  height: 100%;
+  margin-right: 2rem;
+}
+
+.food-image img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.food-desc {
+  width: 50%;
+}
+
+.food-desc h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.food-desc p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.food-desc button {
+  box-sizing: border-box;
+  width: max(8vw, 116px);
+  padding: 12px 5px;
+  border: 1px solid transparent; /* Add this line */
+  color: white;
+  border-radius: 50px;
+  background-color: #ff4c24;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.food-desc button:hover {
+  cursor: pointer;
+  background-color: #ffffff;
+  color: black;
+  border-color: #ff4c24; /* Change this line */
+}
+
+.food-desc h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+
+.food-desc .food-info {
+  font-weight: 100;
+}
+
+@media screen and (max-width: 768px) {
+  .food-desc-container {
+    flex-direction: column;
+  }
+
+  .food-image {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+
+  .food-desc {
+    width: 100%;
+  }
+}
