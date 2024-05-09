@@ -29,18 +29,30 @@ const LoginPopup = ({ setShowLogin }) => {
         if (currState === "Login") {
             new_url += "/api/user/login";
         }
-        else {
-            new_url += "/api/user/register"
+        else if (currState === "Sign Up"){
+            new_url += "/api/user/register";
+        } else {
+            new_url += "/api/user/forget-password";
         }
+
         const response = await axios.post(new_url, data);
-        if (response.data.success) {
-            setToken(response.data.token)
-            localStorage.setItem("token", response.data.token)
-            loadCartData({token:response.data.token})
-            setShowLogin(false)
-        }
-        else {
-            toast.error(response.data.message)
+        if (currState !== "Forget Password") {
+            if (response.data.success) {
+                setToken(response.data.token)
+                localStorage.setItem("token", response.data.token)
+                loadCartData({token:response.data.token})
+                setShowLogin(false)
+            }
+            else {
+                toast.error(response.data.message)
+            }
+        } else {
+            if (response.data.success) {
+                toast.success(response.data.message);
+                setShowLogin(false);
+            } else {
+                toast.error(response.data.message)
+            }
         }
     }
 
@@ -51,15 +63,17 @@ const LoginPopup = ({ setShowLogin }) => {
                     <h2>{currState}</h2> <img onClick={() => setShowLogin(false)} src={assets.cross_icon} alt="" />
                 </div>
                 <div className="login-popup-inputs">
-                    {currState === "Sign Up" ? <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your name' required /> : <></>}
+                    {currState === "Sign Up" ? <input name='name' onChange={onChangeHandler} value={data.name} type="text" placeholder='Your name' required /> : null}
                     <input name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Your email' />
-                    <input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder='Password' required />
+                    {currState !== "Forget Password"?<input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder='Password' required />:null}
+                    {currState === "Login"?<div className='forget-password' onClick={() => setCurrState('Forget Password')}>Forget Password?</div>:null}
                 </div>
-                <button>{currState === "Login" ? "Login" : "Create account"}</button>
-                <div className="login-popup-condition">
+                {currState !== "Forget Password"?<button>{currState === "Login" ? "Login" : "Create account"}</button>: null }
+                {currState==="Forget Password"?<button>{`${currState}`}</button>: null}
+               {currState !== "Forget Password"? <div className="login-popup-condition">
                     <input type="checkbox" name="" id="" required/>
                     <p>By continuing, i agree to the terms of use & privacy policy.</p>
-                </div>
+                </div> : null}
                 {currState === "Login"
                     ? <p>Create a new account? <span onClick={() => setCurrState('Sign Up')}>Click here</span></p>
                     : <p>Already have an account? <span onClick={() => setCurrState('Login')}>Login here</span></p>

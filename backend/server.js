@@ -12,6 +12,11 @@ import categoryRouter from "./routes/categoryRoute.js"
 const app = express()
 const port = 4000
 
+app.use(express.urlencoded({ extended: true }));
+
+// set ejs as view engine
+app.set('view engine', 'ejs')
+
 
 // middlewares
 app.use(express.json())
