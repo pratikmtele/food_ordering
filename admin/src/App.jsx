@@ -2,15 +2,10 @@ import React from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
 import { Route, Routes } from 'react-router-dom';
-import Add from './pages/Add/Add';
-import List from './pages/List/List';
-import Orders from './pages/Orders/Orders';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Category from './pages/Category/Category';
-import ListCategory from './pages/ListCategory/ListCategory.jsx';
-import EditFood from './pages/EditFood/EditFood.jsx';
-import EditCategory from './pages/EditCategory/EditCategory.jsx';
+import {Category, ListCategory, Add, EditFood, EditCategory, List, Orders, AddDiscount, ListDiscount, UpdateDiscount} from './pages/index.js';
+
 
 const App = () => {
   return (
@@ -28,6 +23,9 @@ const App = () => {
           <Route path='/menu/update/:id' element={<EditCategory/>}/>
           <Route path="/food/list" element={<List/>}/>
           <Route path="/orders" element={<Orders/>}/>
+          <Route path="/discount/add" element={<AddDiscount/>}/>
+          <Route path="/discount/list" element={<ListDiscount/>}/>
+          <Route path="/discount/update/:id" element={<UpdateDiscount/>}/>
         </Routes>
       </div>
     </div>

@@ -1,12 +1,53 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Cart.css'
 import { StoreContext } from '../../Context/StoreContext'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Cart = () => {
 
-  const {cartItems, food_list, removeFromCart,getTotalCartAmount,url} = useContext(StoreContext);
+  const {cartItems, food_list, removeFromCart,getTotalCartAmount, fetchCoupon ,url} = useContext(StoreContext);
   const navigate = useNavigate();
+  const [code, setCode] = useState("");
+  const [discount, setDiscount] = useState("");
+
+  const onClickHandler = async (e) => {
+    if (code === ""){
+     toast.error("Please enter a coupon code");
+    }
+    else{
+      const res = await fetchCoupon(code);
+      const isVerified = await verifyCoupon(res);
+      if (isVerified){
+        setDiscount(res.discount);
+        toast.success( "Coupon applied successfully");
+      }
+    }
+  }
+
+  useEffect(() => {
+    setDiscount("");
+    setCode("");
+  }, [cartItems]);
+
+  const onChangeHandler = (e) => {
+    setCode(e.target.value);
+  }
+
+  const verifyCoupon = async (res) => {
+    if (res.minimumPurchaseAmount>getTotalCartAmount()){
+      toast.error("Minimum purchase amount not reached");
+      return false;
+    } else if (res.usedCount > res.usageLimit){
+      toast.error("Coupon usage limit reached");
+      return false;
+    } else if (res.isActive === false){
+      toast.error("Coupon is not active");
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   return (
     <div className='cart'>
@@ -40,7 +81,9 @@ const Cart = () => {
             <hr />
             <div className="cart-total-details"><p>Delivery Fee</p><p>₹{getTotalCartAmount()===0?0:20}</p></div>
             <hr />
-            <div className="cart-total-details"><b>Total</b><b>₹{getTotalCartAmount()===0?0:getTotalCartAmount()+20}</b></div>
+            {discount?<div className='cart-total-details'><p>Discount</p><span className='discount'>-₹{discount}</span></div>:null}
+            {discount? <hr />: null}
+            <div className="cart-total-details"><b>Total</b><b>₹{getTotalCartAmount()===0?0: discount? getTotalCartAmount()+20-discount: getTotalCartAmount()+20}</b></div>
           </div>
           <button onClick={()=>navigate('/order')}>PROCEED TO CHECKOUT</button>
         </div>
@@ -48,8 +91,8 @@ const Cart = () => {
           <div>
             <p>If you have a promo code, Enter it here</p>
             <div className='cart-promocode-input'>
-              <input type="text" placeholder='promo code'/>
-              <button>Submit</button>
+              <input type="text" placeholder='promo code' onChange={onChangeHandler} value={code}/>
+              <button onClick={onClickHandler}>Submit</button>
             </div>
           </div>
         </div>

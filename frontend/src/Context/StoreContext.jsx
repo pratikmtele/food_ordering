@@ -31,6 +31,11 @@ const StoreContextProvider = (props) => {
         }
     }
 
+    const fetchCoupon = async (code) => {
+       const response = await axios.get(url + "/api/discount/" + code);
+         return response.data.data;
+    }
+
     const getTotalCartAmount = () => {
         let totalAmount = 0;
         for (const item in cartItems) {
@@ -89,7 +94,8 @@ const StoreContextProvider = (props) => {
         setToken,
         fetchFood,
         loadCartData,
-        setCartItems
+        setCartItems,
+        fetchCoupon
     };
 
     return (

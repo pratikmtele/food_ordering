@@ -50,7 +50,6 @@ const List = () => {
 
   useEffect(()=>{
     setSearchedItem(list.filter((item)=> item.name.toLowerCase().includes(search)));
-    console.log(searchedItem);
   }, [search]);
 
   return (
