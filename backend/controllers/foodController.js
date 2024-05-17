@@ -10,7 +10,6 @@ const listFood = async (req, res) => {
         console.log(error);
         res.json({ success: false, message: "Error" })
     }
-
 }
 
 // fetch food by id

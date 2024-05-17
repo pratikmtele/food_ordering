@@ -28,6 +28,7 @@ const App = () => {
           <Route path='/search-food' element={<SearchFood />}/>
           <Route path='/cart' element={<Cart />}/>
           <Route path='/order' element={<PlaceOrder />}/>
+          <Route path='/order/:id' element={<PlaceOrder />}/>
           <Route path='/myorders' element={<MyOrders />}/>
           <Route path='/verify' element={<Verify />}/>
           <Route path='/food/description/:id' element={<FoodDesc/>}/> 

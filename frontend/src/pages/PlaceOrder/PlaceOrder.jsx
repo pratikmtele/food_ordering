@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './PlaceOrder.css'
 import { StoreContext } from '../../Context/StoreContext'
-import { assets } from '../../assets/assets';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const PlaceOrder = () => {
+
+    const {id} = useParams();
+
+    const [discount, setdiscount] = useState(null);
 
     const [data, setData] = useState({
         firstName: "",
@@ -20,7 +23,7 @@ const PlaceOrder = () => {
         phone: ""
     })
 
-    const { getTotalCartAmount, token, food_list, cartItems, url } = useContext(StoreContext);
+    const { getTotalCartAmount, token, food_list, cartItems, fetchDiscountCouponById, url } = useContext(StoreContext);
 
     const navigate = useNavigate();
 
@@ -40,11 +43,24 @@ const PlaceOrder = () => {
                 orderItems.push(itemInfo)
             }
         }))
-        let orderData = {
-            address: data,
-            items: orderItems,
-            amount: getTotalCartAmount() + 20,
+        let orderData;
+        if (discount){
+            console.log(discount);
+            orderData = {
+                address: data,
+                items: orderItems,
+                amount: getTotalCartAmount() + 20 - discount,
+                discount: discount
+            }
+        } else {
+            orderData = {
+                address: data,
+                items: orderItems,
+                amount: getTotalCartAmount() + 20,
+                discount: 110
+            }
         }
+
         let response = await axios.post(url + "/api/order/place", orderData, { headers: { token } });
         if (response.data.success) {
             const { session_url } = response.data;
@@ -63,7 +79,18 @@ const PlaceOrder = () => {
         else if (getTotalCartAmount() === 0) {
             navigate('/cart')
         }
-    }, [token])
+    }, [token]);
+
+    useEffect(() => {
+        fetchDiscountCoupon()
+    }, [id]);
+
+    async function fetchDiscountCoupon() {
+        if (id){
+            const response = await fetchDiscountCouponById(id);
+            setdiscount(response.discount);
+        }
+    }
 
     return (
         <form onSubmit={placeOrder} className='place-order'>
@@ -93,7 +120,9 @@ const PlaceOrder = () => {
                         <hr />
                         <div className="cart-total-details"><p>Delivery Fee</p><p>₹{getTotalCartAmount() === 0 ? 0 : 20}</p></div>
                         <hr />
-                        <div className="cart-total-details"><b>Total</b><b>₹{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 20}</b></div>
+                        {discount?<div className="cart-total-details"><p>Discount</p><span className='discount'>-₹{discount}</span></div>:null}
+                        {discount?<hr />:null}
+                        <div className="cart-total-details"><b>Total</b><b>₹{getTotalCartAmount()===0?0: discount? getTotalCartAmount()+20-discount: getTotalCartAmount()+20}</b></div>
                     </div>
                 </div>
                 <button className='place-order-submit' type='submit'>Proceed To Payment</button>

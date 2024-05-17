@@ -10,6 +10,7 @@ const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const [token, setToken] = useState("");
     const [category_list, setCategoryList] = useState([]);
+    const [discountId, setDiscountId] = useState("");
 
 
     const addToCart = async (itemId) => {
@@ -32,8 +33,14 @@ const StoreContextProvider = (props) => {
     }
 
     const fetchCoupon = async (code) => {
-       const response = await axios.get(url + "/api/discount/" + code);
-         return response.data.data;
+        const response = await axios.get(url + "/api/discount/" + code);
+        setDiscountId(response.data.data._id);
+        return response.data.data;
+    }
+
+    const fetchDiscountCouponById = async (id) => {
+        const response = await axios.get(url + "/api/discount/get/" + id);
+        return response.data.data;
     }
 
     const getTotalCartAmount = () => {
@@ -95,7 +102,9 @@ const StoreContextProvider = (props) => {
         fetchFood,
         loadCartData,
         setCartItems,
-        fetchCoupon
+        fetchCoupon,
+        discountId,
+        fetchDiscountCouponById
     };
 
     return (

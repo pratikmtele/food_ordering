@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const Cart = () => {
 
-  const {cartItems, food_list, removeFromCart,getTotalCartAmount, fetchCoupon ,url} = useContext(StoreContext);
+  const {cartItems, food_list, removeFromCart,getTotalCartAmount, fetchCoupon, discountId ,url} = useContext(StoreContext);
   const navigate = useNavigate();
   const [code, setCode] = useState("");
   const [discount, setDiscount] = useState("");
@@ -49,6 +49,14 @@ const Cart = () => {
     }
   }
 
+  const onCheckoutHandler = async () => {
+    if (discount){
+      navigate(`/order/${discountId}`);
+    } else {
+      navigate('/order');
+    }
+  }
+
   return (
     <div className='cart'>
       <div className="cart-items">
@@ -85,14 +93,14 @@ const Cart = () => {
             {discount? <hr />: null}
             <div className="cart-total-details"><b>Total</b><b>₹{getTotalCartAmount()===0?0: discount? getTotalCartAmount()+20-discount: getTotalCartAmount()+20}</b></div>
           </div>
-          <button onClick={()=>navigate('/order')}>PROCEED TO CHECKOUT</button>
+          <button onClick={onCheckoutHandler}>PROCEED TO CHECKOUT</button>
         </div>
         <div className="cart-promocode">
           <div>
             <p>If you have a promo code, Enter it here</p>
             <div className='cart-promocode-input'>
               <input type="text" placeholder='promo code' onChange={onChangeHandler} value={code}/>
-              <button onClick={onClickHandler}>Submit</button>
+              <button type="button" onClick={onClickHandler}>Submit</button>
             </div>
           </div>
         </div>
