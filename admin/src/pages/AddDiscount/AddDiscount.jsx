@@ -26,7 +26,6 @@ const AddDiscount = () => {
                 usageLimit: "",
                 minimumPurchaseAmount: ""
             })
-            console.log(data);
         }
         else{
             toast.error(response.data.message)

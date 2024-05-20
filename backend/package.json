@@ -4,8 +4,14 @@
   "description": "",
   "type": "module",
   "main": "server.js",
+  "jest": {
+    "testMatch": [
+      "**/*.test.js"
+    ]
+  },
   "scripts": {
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "test": "node --trace-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
   },
   "author": "",
   "license": "ISC",

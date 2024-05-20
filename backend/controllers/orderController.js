@@ -39,19 +39,6 @@ const placeOrder = async (req, res) => {
             quantity:1
         })
 
-        let discount = req.body.discount*100;
-
-        line_items.push({
-            price_data: {
-                currency: "inr",
-                product_data: {
-                    name: "Discount"
-                },
-                unit_amount: discount.toString() 
-            },
-            quantity: 1
-        });
-
         const session = await stripe.checkout.sessions.create({
             success_url: `http://localhost:5174/verify?success=true&orderId=${newOrder._id}`,
             cancel_url: `http://localhost:5174/verify?success=false&orderId=${newOrder._id}`,

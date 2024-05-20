@@ -15,12 +15,12 @@ import discountModel from '../models/discountModel.js';
  // add discount
 const addDiscount = async (req, res) => {
    
-    const {code, discountAmount, limit, minimumPurchaseAmount} = req.body;
+    const {code, discountAmount, usageLimit, minimumPurchaseAmount} = req.body;
 
     const discount = new discountModel({
         code,
         discount: discountAmount,
-        usageLimit: limit,
+        usageLimit,
         minimumPurchaseAmount
     });
 

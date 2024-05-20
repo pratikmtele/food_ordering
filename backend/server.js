@@ -36,8 +36,10 @@ app.use("/api/order",orderRouter)
 app.use("/api/category", categoryRouter)
 app.use("/api/discount", discountRouter)
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
     res.send("API Working")
 });
 
 app.listen(port, () => console.log(`Server started on http://localhost:${port}`))
+
+export default app;
