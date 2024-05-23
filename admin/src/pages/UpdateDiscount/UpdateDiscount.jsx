@@ -10,11 +10,8 @@ const UpdateDiscount = () => {
 
     const [data, setData] = useState({
         code: "",
-        discount: "",
-        usageLimit: "",
         minimumPurchaseAmount: "",
         isActive: true,
-        usedCount: 0
     });
 
     const onSubmitHandler = async (event) => {
@@ -55,18 +52,6 @@ const UpdateDiscount = () => {
                 <div className='add-product-name flex-col'>
                     <p>Code</p>
                     <input name='code' onChange={onChangeHandler} value={data.code} type="text" placeholder='Type here' required />
-                </div>
-                <div className='add-product-name flex-col'>
-                    <p>Discount Amount</p>
-                    <input name='discountAmount' onChange={onChangeHandler} value={data.discount} type="number" placeholder='Type here' required />
-                </div>
-                <div className='add-product-name flex-col'>
-                    <p>Usage Limit</p>
-                    <input name='usageLimit' onChange={onChangeHandler} value={data.usageLimit} type="number" placeholder='Type here' required />
-                </div>
-                <div className='add-product-name flex-col'>
-                    <p>Coupon Used</p>
-                    <input name='usedCount' onChange={onChangeHandler} value={data.usedCount} type="number" placeholder='Type here' required />
                 </div>
                 <div className='add-product-name flex-col'>
                     <p>Minimum Purchase Amount</p>

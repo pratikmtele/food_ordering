@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Category, ListCategory, Add, EditFood, EditCategory, List, Orders, AddDiscount, ListDiscount, UpdateDiscount} from './pages/index.js';
+import Login from './components/Login/Login.jsx';
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
       <div className="app-content">
         <Sidebar/>
         <Routes>
+          <Route path='/' element={<Login/>}/>
           <Route path='/menu' element={<Category/>} />
           <Route path='/menu/list' element={<ListCategory/>}/>
           <Route path="/food/add" element={<Add/>}/>

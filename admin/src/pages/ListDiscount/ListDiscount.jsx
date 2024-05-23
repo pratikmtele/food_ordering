@@ -82,7 +82,14 @@ const ListDiscount = () => {
                 <p>{item.discount}</p>
                 <p>{item.usageLimit}</p>
                 <p>{item.usedCount}</p>
-                <p>{item.minimumPurchaseAmount}</p>
+                <p>{item.minimumPurchaseAmount === null ? "-" : item.minimumPurchaseAmount}</p>
+                <ToggleSwitch onChange={() => toggleActiveStatus(item)} checked={item.isActive}/>
+                <div className='action-icons'>
+                  <Link to={`/discount/update/`+item._id}>
+                    <img className='cursor icons edit-icon' src={assets.Edit_icon}/>
+                  </Link>
+                  <img className='cursor icons' src={assets.Remove_icon} onClick={()=> removeDiscount(item._id)}></img>
+                </div>
               </div>
             )
           }):
