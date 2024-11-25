@@ -1,5 +1,12 @@
-import express from 'express';
-import { loginUser, registerUser, updateAccount, forgetPassword, reset_password, changePassword } from '../controllers/userController.js';
+import express from "express";
+import {
+  loginUser,
+  registerUser,
+  updateAccount,
+  forgetPassword,
+  reset_password,
+  changePassword,
+} from "../controllers/userController.js";
 const userRouter = express.Router();
 
 userRouter.post("/register", registerUser);

@@ -1,37 +1,55 @@
-import React, { useContext } from 'react';
-import './FoodItem.css';
-import { assets } from '../../assets/assets';
-import { StoreContext } from '../../Context/StoreContext';
-import {Link} from 'react-router-dom';
+import React, { useContext } from "react";
+import "./FoodItem.css";
+import { assets } from "../../assets/assets";
+import { StoreContext } from "../../Context/StoreContext";
+import { Link } from "react-router-dom";
 
-const FoodItem = ({ image, name, price, desc , id }) => {
+const FoodItem = ({ image, name, price, desc, id }) => {
+  const { cartItems, addToCart, removeFromCart, URL } =
+    useContext(StoreContext);
 
-    const {cartItems, addToCart, removeFromCart,url} = useContext(StoreContext);
-
-    return (
-        <div className='food-item'>
-            <div className='food-item-img-container'>
-                <Link to={`/food/description/${id}`} >
-                    <img className='food-item-image' src={url+"/images/"+image} alt="" />
-                </Link>
-                {!cartItems[id]
-                ?<img className='add' onClick={() => addToCart(id)} src={assets.add_icon_white} alt="" />
-                :<div className="food-item-counter">
-                        <img src={assets.remove_icon_red} onClick={()=>removeFromCart(id)} alt="" />
-                        <p>{cartItems[id]}</p>
-                        <img src={assets.add_icon_green} onClick={()=>addToCart(id)} alt="" />
-                    </div>
-                }
-            </div>
-            <div className="food-item-info">
-                <div className="food-item-name-rating">
-                    <p>{name}</p> <img src={assets.rating_starts} alt="" />
-                </div>
-                <p className="food-item-desc">{desc}</p>
-                <p className="food-item-price">₹{price}</p>
-            </div>
+  return (
+    <div className="food-item">
+      <div className="food-item-img-container">
+        <Link to={`/food/description/${id}`}>
+          <img
+            className="food-item-image"
+            src={URL + "/images/" + image}
+            alt=""
+          />
+        </Link>
+        {!cartItems[id] ? (
+          <img
+            className="add"
+            onClick={() => addToCart(id)}
+            src={assets.add_icon_white}
+            alt=""
+          />
+        ) : (
+          <div className="food-item-counter">
+            <img
+              src={assets.remove_icon_red}
+              onClick={() => removeFromCart(id)}
+              alt=""
+            />
+            <p>{cartItems[id]}</p>
+            <img
+              src={assets.add_icon_green}
+              onClick={() => addToCart(id)}
+              alt=""
+            />
+          </div>
+        )}
+      </div>
+      <div className="food-item-info">
+        <div className="food-item-name-rating">
+          <p>{name}</p> <img src={assets.rating_starts} alt="" />
         </div>
-    )
-}
+        <p className="food-item-desc">{desc}</p>
+        <p className="food-item-price">₹{price}</p>
+      </div>
+    </div>
+  );
+};
 
-export default FoodItem
+export default FoodItem;
