@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const LoginPopup = ({ setShowLogin }) => {
-  const { setToken, url, loadCartData } = useContext(StoreContext);
+  const { setToken, URL, loadCartData } = useContext(StoreContext);
   const [currState, setCurrState] = useState("Sign Up");
 
   const [data, setData] = useState({
@@ -24,7 +24,7 @@ const LoginPopup = ({ setShowLogin }) => {
   const onLogin = async (e) => {
     e.preventDefault();
 
-    let new_url = url;
+    let new_url = URL;
     if (currState === "Login") {
       new_url += "/api/user/login";
     } else if (currState === "Sign Up") {
